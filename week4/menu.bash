@@ -148,7 +148,7 @@ security_menu () {
 		[C]isco blocklist generator
 		[D]omain URL blocklist generator
 		[M]ac OSX blocklist generator
-		[F]irewall (Windows) blocklist generator
+		[W]indows blocklist generator
 		[I]Ptables blocklist generator
 		[E]xit
 		[B]ack to main menu"
@@ -160,7 +160,7 @@ security_menu () {
 		;;
 		M|m) bash parse-threat.bash -m
 		;;
-		F|f) bash parse-threat.bash -f
+		F|f) bash parse-threat.bash -w
 		;;
 		I|i) bash parse-threat.bash -i
 		;;

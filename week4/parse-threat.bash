@@ -12,17 +12,17 @@ egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.0/[0-9]{1,2}' /tmp/emerging-drop.s
 }
 
 #check if the badips file exists
-FILE="badIPs.txt"
-if test -f "$FILE"; then
+i="badIPs.txt"
+if test -f "$i"; then
  #if yes ask if it should be redownloaded
-	read -p "This file already exists. Would you like to overwrite it? y/N" choice
+	read -p "This file already exists. Do you want to overwrite it? y/N" choice
 
 	case "${choice}" in
 		Y|y) 
-		echo  "Creating badIPs.txt..."
+		echo  "redownloading badIPs.txt"
 		badIPs
 		;;
-		N|n) echo "Not redownloading badIPs.txt..."
+		N|n) echo "Not redownloading badIPs.txt"
 		;;
 		*) 
 			echo "Invalid value."
@@ -45,7 +45,7 @@ egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.0' badIPs.txt | tee badips.windows
 	done
 	rm badips.windowsform
 	clear
-	echo 'IP Table for windows firewall drop rules in file "badips.netsh"'
+	echo 'file output:"badips.netsh" - IP Table for windows firewall drop rules'
 }
 
 #cisco
@@ -57,7 +57,7 @@ do
 done
 rm badips.nocidr
 clear
-echo 'IP Table for cisco firewall drop rules in file "badips.cisco"'
+echo 'file output:"badips.cisco" - IP Table for cisco firewall drop rules'
 }
 
 #mac
@@ -76,7 +76,7 @@ do
 	echo "block in from ${eachIP}" | tee -a pf.conf 
 done
 clear
-echo 'IP table for mac firewall drop rules in file "pf.conf"'
+echo 'file output:"pf.conf" - IP table for mac firewall drop rules'
 }
 
 #iptables
@@ -86,7 +86,7 @@ do
 	echo "iptables -A INPUT -s $(eachIP) -j DROP" | tee -a badIPs.iptables #iptable
 done
 clear
-	echo 'Created IPTables firewall drop rules in file \"badips.iptables\"'
+	echo 'file output: \"badips.iptables\" - Created IPTables firewall drop rules'
 }
 
 #parse the cisco file
@@ -99,7 +99,7 @@ wget https://raw.githubusercontent.com/botherder/targetedthreats/master/targeted
 		echo 'match http host \"${eachip}\"' | tee -a ciscothreats.txt
 	done
 	rm threats.txt
-	echo 'Cisco URL filters file parsed, created "ciscothreats.txt"'
+	echo 'file output:"ciscothreats.txt" - Cisco URL filters file parsed'
 }
 
 #various inbound drop rule switches

@@ -111,7 +111,7 @@ while getopts 'cdmfi' OPTION ; do
 		;;
 		m) mac
 		;;
-		f) windows
+		w) windows
 		;;
 		i) iptables
 		;;

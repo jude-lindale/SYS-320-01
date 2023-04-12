@@ -1,4 +1,4 @@
-﻿#Storyline: This code is going to take system information and place it inside a zipfile. This code will also create the corrispoding hash tables for the files that are being created
+#Storyline: This code is going to take system information and place it inside a zipfile. This code will also create the corrispoding hash tables for the files that are being created
 
 # Ask user where to save
 $savePath = Read-Host -Prompt "Please enter the full path of the directory to save results"
@@ -6,12 +6,12 @@ $savePath = Read-Host -Prompt "Please enter the full path of the directory to sa
 
 # 1. Running Processes and the path for each process.
 $processesPath = Join-Path -Path $savePath -ChildPath "processes.csv"
-Get-Process |  Select-Object Name, Path |Export-Csv -Path "Processes.csv" -NoTypeInformation
+Get-Process | Select-Object Name, Path |Export-Csv -Path $processesPath -NoTypeInformation
 
 
 # 2. All registered services and the path to the executable controlling the service (you'll need to use WMI).
 $servicesPath = Join-Path -Path $savePath -ChildPath "services.csv"
-Get-WmiObject -Class Win32_Service | Select-Object Name, PathName | Export-Csv -Path $servicesPath -NoTypeInformation
+Get-WmiObject -Class Win32_Service | Select-Object Name, ProcessId| Export-Csv -Path $servicesPath -NoTypeInformation
 
 # 3. All TCP network sockets
 $tcpSocketsPath = Join-Path -Path $savePath -ChildPath "tcpSockets.csv"
@@ -25,7 +25,6 @@ Get-WmiObject -Class Win32_UserAccount | Export-Csv -Path $userAccountsPath -NoT
 $networkAdaptersPath = Join-Path -Path $savePath -ChildPath "networkAdapterConfiguration.csv"
 Get-WmiObject -Class Win32_NetworkAdapterConfiguration | Export-Csv -Path $networkAdaptersPath -NoTypeInformation
 
-# four more things
 # 6. Firewall profile information - provides helpful information for incedent report because it shows the firewall configuration. This allows for checking what is an is not allowed as well as what is not in the configurations which can be used to figureout how the incidnet may have been allowed.
 $netFirewallProfile = Join-Path $savePath -ChildPath "netFirewallProfile.csv"
 Get-NetFirewallProfile | Export-Csv -path $netFirewallProfile -NoTypeInformation
@@ -50,5 +49,3 @@ $zipPath = "$savePath\results.zip"
 
 # Compress the directory results
 Compress-Archive -Path $savePath\* -DestinationPath $zipPath -Force
-
-

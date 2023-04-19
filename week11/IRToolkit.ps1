@@ -1,4 +1,4 @@
-﻿#Storyline: This code is going to take system information and place it inside a zipfile. This code will also create the corrispoding hash tables for the files that are being created
+#Storyline: This code is going to take system information and place it inside a zipfile. This code will also create the corrispoding hash tables for the files that are being created
 
 # Ask user where to save
 $savePath = Read-Host -Prompt "Please enter the full path of the directory to save results"
@@ -49,5 +49,3 @@ $zipPath = "$savePath\results.zip"
 
 # Compress the directory results
 Compress-Archive -Path $savePath\* -DestinationPath $zipPath -Force
-
-
